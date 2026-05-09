@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Report Output",
+  "type": "object",
+  "required": ["session_id", "clinical_report_path", "patient_summary_path", "qa_status"],
+  "properties": {
+    "session_id": { "type": "string" },
+    "clinical_report_path": { "type": "string" },
+    "patient_summary_path": { "type": "string" },
+    "citations_path": { "type": "string" },
+    "qa_status": {
+      "type": "string",
+      "enum": ["pass", "retry", "needs_review"]
+    },
+    "qa_rubric": {
+      "type": "object",
+      "properties": {
+        "red_flag_checked": { "type": "boolean" },
+        "differential_count": { "type": "boolean" },
+        "evidence_grade_ab": { "type": "boolean" },
+        "patient_factors": { "type": "boolean" },
+        "home_care_present": { "type": "boolean" },
+        "disclaimer_ready": { "type": "boolean" }
+      }
+    },
+    "disclaimer_included": { "type": "boolean", "description": "免責事項が全ファイルに含まれているか" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

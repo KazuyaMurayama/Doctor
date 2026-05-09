@@ -1,0 +1,13 @@
+# 環境設定（PII・認証情報）
+.env
+*.env.local
+
+# セッションデータ（PII保護のため非公開）
+sessions/*/
+!sessions/.gitkeep
+
+# OS・エディタ
+.DS_Store
+*.swp
+__pycache__/
+*.pyc

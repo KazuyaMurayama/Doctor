@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Patient Intake",
+  "description": "Initial patient information for medical consultation",
+  "type": "object",
+  "required": ["session_id", "chief_complaint", "timestamp"],
+  "properties": {
+    "session_id": { "type": "string", "description": "UUID v4" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "chief_complaint": { "type": "string", "minLength": 5 },
+    "patient": {
+      "type": "object",
+      "properties": {
+        "age_group": {
+          "type": "string",
+          "enum": ["infant(0-1)", "child(2-14)", "teen(15-17)", "adult(18-64)", "elderly(65-74)", "super_elderly(75+)", "unknown"]
+        },
+        "sex": { "type": "string", "enum": ["male", "female", "unknown"] },
+        "pregnancy_possible": { "type": "boolean" },
+        "relation": { "type": "string", "description": "本人/子供/親/配偶者/etc." }
+      }
+    },
+    "symptom_details": {
+      "type": "object",
+      "properties": {
+        "onset": { "type": "string" },
+        "duration": { "type": "string" },
+        "progression": { "type": "string", "enum": ["improving", "stable", "worsening", "fluctuating", "unknown"] },
+        "associated_symptoms": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "medical_history": {
+      "type": "object",
+      "properties": {
+        "chronic_conditions": { "type": "array", "items": { "type": "string" } },
+        "current_medications": { "type": "array", "items": { "type": "string" } },
+        "allergies": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "raw_input": { "type": "string", "description": "ユーザーの元の入力文字列" }
+  }
+}
