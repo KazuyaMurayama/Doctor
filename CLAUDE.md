@@ -74,3 +74,6 @@
 - **アーキ図/フロー図が必要な時** → `mermaid-agents365`
 - **要件調査が真に必要な時のみ** → `research-deep`
 <!-- SKILLS_RULES_END -->
+
+### モデル・サブエージェント
+- 全タスク Opus（期間限定）。サブエージェントも `model: "opus"` を明示。
