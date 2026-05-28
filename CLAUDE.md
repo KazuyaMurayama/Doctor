@@ -71,11 +71,11 @@
 ## Skill 起動ルール（v2.0 / 2026-05-28）
 以下のスキルは **必須・スキップ禁止**。該当シーンでは SKILL.md を読んでから作業を開始すること。
 
-- **新機能実装・設計を始める前に必ず** `.claude/medical/sp-brainstorming/SKILL.md` でアイデアを出し、`.claude/medical/sp-writing-plans/SKILL.md` で計画を作成してから着手する
-- **複雑な多段タスクは** `.claude/medical/sp-executing-plans/SKILL.md` の手順で実行する
-- **アーキ図・フロー図が必要な時は必ず** `.claude/medical/mermaid-agents365/SKILL.md` を読んでからダイアグラムを作成する
-- **成果物を納品・コミットする前に必ず** `.claude/medical/sp-verification-before-completion/SKILL.md` のチェックリストを実行する
-- **要件調査が真に必要な時のみ** `.claude/medical/research-deep/SKILL.md` を読んで Web リサーチを実行する
+- **新機能実装・設計を始める前に必ず** `.claude/skills/sp-brainstorming/SKILL.md` でアイデアを出し、`.claude/skills/sp-writing-plans/SKILL.md` で計画を作成してから着手する
+- **複雑な多段タスクは** `.claude/skills/sp-executing-plans/SKILL.md` の手順で実行する
+- **アーキ図・フロー図が必要な時は必ず** `.claude/skills/mermaid-agents365/SKILL.md` を読んでからダイアグラムを作成する
+- **成果物を納品・コミットする前に必ず** `.claude/skills/sp-verification-before-completion/SKILL.md` のチェックリストを実行する
+- **要件調査が真に必要な時のみ** `.claude/skills/research-deep/SKILL.md` を読んで Web リサーチを実行する
 <!-- SKILLS_RULES_END -->
 
 ### モデル・サブエージェント
