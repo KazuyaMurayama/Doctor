@@ -1,89 +1,73 @@
-# CLAUDE.md
+# Doctor — Claude Code 運用ルール
 
-## 🚀 自動実行ポリシー
+医療・健康関連の情報検索・診断支援ツール（Shellスクリプト中心）。
 
-### 確認不要で即実行する操作
-- 全ファイル操作（作成・編集・削除）
-- 全シェルコマンド（PowerShell, Bash, git, gh, npm, node, python）
-- Git操作: add / commit / push / pull / fetch / merge / branch -D / reset --hard
-- GitHub操作: gh pr create / gh api 全般 / ブランチ削除
-- パッケージ操作: npm install / pip install / Web検索・フェッチ
+> **本ファイルは VSCode版 / Web版 Claude Code（claude.ai）の両方で本リポジトリの単独完結ガイド**。
+> Web版はグローバル `~/.claude/CLAUDE.md` を参照しない前提で、本リポの運用に必要な全ルールをここに集約。
 
-### 事前確認が必要な操作（例外のみ）
-- `git push --force` を main / master ブランチに対して実行する場合
-- `gh repo delete` 実行時
+> ⚠️ README が未整備のリポジトリ。プロジェクト目的を明確化する必要あり（Next Action 参照）。
 
-### 動作原則
-- 計画提示（簡潔）→ 即実行 → 結果報告 のフロー厳守
-- 事前確認文（「Should I run...?」等）を出力しない
+---
 
-## ドキュメント日付ルール
+## 0. セッション開始時の参照順序
+1. `tasks.md` — 未完了タスク（存在する場合）
+2. `FILE_INDEX.md` — ファイル一覧（存在する場合）
+3. このCLAUDE.md — ルール入口
 
-レポート系 .md ファイル新規生成時は H1 タイトル直下に必ず記載:
-```
-作成日: YYYY-MM-DD
-最終更新日: YYYY-MM-DD
-```
-- 更新時は最終更新日のみ当日付に書き換え（作成日は変更しない）
-- 除外: README.md / CLAUDE.md / FILE_INDEX.md / tasks.md / CHANGELOG.md
+---
 
-## 開発者情報
+## 1. 開発者情報・命名ルール
 
-このリポジトリの開発者・所有者は **男座員也（Kazuya Oza / おざ かずや）** です。
+| 種別 | 表記 | 用途 |
+|---|---|---|
+| **システム識別子（変更不可）** | `KazuyaMurayama` | GitHub ユーザー名 / URL / `@KazuyaMurayama` |
+| **システム識別子（変更不可）** | `kazuya.murayama.21@gmail.com` | git `user.email` / 連絡先 |
+| **表記名（人間として記載する場合）** | **男座員也（Kazuya Oza / おざ かずや）** | ドキュメント本文の著者名 / コミット message 中の自己言及 |
 
-- ドキュメント・コード・コミット等で開発者名を記載する際は必ず **男座員也** または **Kazuya Oza** を使用する
-- 「Murayama」「村山」「Otokoza」「おとこざ」など誤表記は使用しない
+- ドキュメント本文等で開発者名を**人間として**記載する際は **男座員也 / Kazuya Oza** を使用
+- 「Murayama」「村山」「Otokoza」「おとこざ」を**表記名**として誤用しない（システム識別子としての `KazuyaMurayama` は許容）
 
-### 開発者の作業環境
-- **OS:** Windows 11（Macではない）。シェルは PowerShell 5.1 / Bash（WSL/Git Bash）。`brew` / `Cmd+` / Mac専用コマンドは使用不可。パッケージ管理は `winget` / `scoop`。
-- **スマートフォン:** iPhone（iOS）。Android固有の手順・adb・Play Store等は不要。
-- コマンド例はPowerShell構文（`;` 連結、`$env:VAR`）で提示。macOS専用ツールを回答に含めない。
+---
 
+## 2. ツール実行・Git・ファイル保存
+- 確認不要・即実行（事前確認文を出力しない）
+- 例外（事前確認必須）: main への `git push --force`、`gh repo delete`
+- **ブランチ管理**: デフォルトはmainへ直接コミット。ブランチ作成は明示指示時のみ。万一作成した場合はmainマージ→削除→push完了で「完了」
+- **ファイル保存**: 本リポ内のみ。`C:\Users\user\Desktop` への出力禁止
 
-## 作業品質ルール
+---
 
-### Git・ブランチ管理（絶対厳守）
-- 作業前: `git branch --show-current` でブランチ確認 → main以外なら `git checkout main && git pull` してから開始。
-- **デフォルト: mainへ直接コミット**。ブランチ作成はユーザーが明示的に指示した場合のみ。
-- ブランチを作成した場合、必ず `main` へマージ → ブランチ削除 → push を完了してから作業完了とする。
-- ブランチにファイルを置いたまま回答を完了することを禁止。「完了 = mainにマージ済み＆push済み」。
-- ブランチが残存している場合は、次セッション開始時に `git branch -a` で確認し、即マージ・削除する。
+## 3. 成果物報告ルール
 
-### ファイル特定（編集前）
-- ユーザー発話のキーワード全てをファイル名と照合してから編集。キーワード不完全一致・候補不確かなら必ず確認。
+| 成果物 | 説明 | リンク |
+|---|---|---|
+| file.md | 1行説明 | [開く](https://github.com/KazuyaMurayama/Doctor/blob/main/path/to/file.md) |
 
-### 成果物報告
-- ファイル作成・更新・push後は必ず3列表で報告: `| 成果物 | 説明 | リンク |`
-- リンクは `/blob/<実ブランチ>/<パス>` 形式。報告前に `gh api repos/OWNER/REPO/contents/PATH?ref=BRANCH` で存在確認。push前はURL生成しない。
+- Markdownリンク `[表示名](URL)` 形式必須 / `/blob/<実ブランチ>/<実パス>` 形式
+- **報告前にURL存在確認**：`Invoke-WebRequest -Uri https://api.github.com/repos/KazuyaMurayama/Doctor/contents/PATH?ref=main -UseBasicParsing` でステータス200確認
+- push完了後のみURL生成
 
-### ドキュメント品質
-- UIパス・コマンド・設定名は公式ドキュメントで確認後に記載。確認不可なら「[要確認]」と明記。
-- OS/環境制約（例: Windows専用）をタスク開始時に確認。完成後に `brew`/`Cmd`/`macOS` 等をgrepして除去。
+---
 
-## 他リポジトリ参照ルール
-別リポジトリの内容を参照する必要が生じたら、必ず `.claude/cross-repo.md` を読み、その手順に従って `WebFetch` で取得する（「できない」と返さない）。
+## 4. Next Action（プロジェクトオーナーへの提案）
+- **README.md を整備する**：プロジェクト目的・主要機能・セットアップ手順を明記
+- Shell スクリプトのエントリポイント・主要コマンドを README に列挙
+- 医療情報を扱うため、参考にすべき情報源・出典明記ポリシーを定義することを推奨
 
-### 品質ルール（必読）
-- ブランチ衛生・リサーチファクトチェックは `.claude/quality-rules.md` を参照し、ファイル生成前・push前に必ず適用する。
-- Repo type: app
+---
 
-## ビジュアルルール（レポートMD生成時）
-- レポート・成果物MDの新規作成／更新時は `.claude/visual-rules.md` を読み、図の種類判定（§2）と Mermaid 最適化（§3）を毎回適用する。
-- 適用対象: `## ` 見出しが2つ以上ある構造化MD（調査結果・戦略レポート・設計書・PR説明など）。
+## 5. ドキュメント日付ルール
+レポート系 .md 新規作成時は H1直下に `作成日: YYYY-MM-DD` / `最終更新日: YYYY-MM-DD` 必須。更新時は最終更新日のみ書き換え。除外: README / CLAUDE.md / FILE_INDEX / tasks.md / CHANGELOG / LICENSE。
 
-## ファイル保存ルール
-- 成果物・スクリプトは本リポジトリ内のみに保存。`C:\\Users\\user\\Desktop` への出力禁止（ユーザー明示指定時を除く）。
+---
 
-<!-- SKILLS_RULES_START -->
-## Skill 起動ルール（v2.2 / 2026-06-01）
-以下のスキルは **必須・スキップ禁止**。該当シーンでは SKILL.md を読んでから作業を開始すること。
+## 6. Skill 起動ルール
 
-- **新機能実装・設計を始める前に必ず** `.claude/skills/sp-brainstorming/SKILL.md` でアイデアを出し、`.claude/skills/sp-writing-plans/SKILL.md` で計画を作成してから着手する
-- **複雑な多段タスクは** `.claude/skills/sp-executing-plans/SKILL.md` の手順で実行する
-- **アーキ図・フロー図が必要な時は必ず** `.claude/skills/mermaid-agents365/SKILL.md` を読んでからダイアグラムを作成する
-- **成果物の納品・コミット前、または品質チェック（QC）・レビューフェーズに入る時は必ず** `.claude/skills/sp-verification-before-completion/SKILL.md` のチェックリストを実行する
-- **要件調査が真に必要な時のみ** `.claude/skills/research-deep/SKILL.md` を読んで Web リサーチを実行する
-<!-- SKILLS_RULES_END -->
-
-### モデル・サブエージェント
-- 全タスク Opus（期間限定）。サブエージェントも `model: "opus"` を明示。
+| トリガー | スキル |
+|---|---|
+| 医療・健康分野の調査 | `.claude/skills/research-deep/SKILL.md` |
+| 論文・エビデンス検証 | `.claude/skills/data-quality-audit/SKILL.md` |
+| 計画立案 | `.claude/skills/sp-writing-plans/SKILL.md` + `sp-executing-plans/SKILL.md` |
+| バグ・エラー調査（Shell スクリプト） | `.claude/skills/sp-systematic-debugging/SKILL.md` |
+| QC・レビュー前 | `.claude/skills/analysis-qa-checklist/SKILL.md` |
+| 成果物の納品・コミット前 | `.claude/skills/sp-verification-before-completion/SKILL.md` |
